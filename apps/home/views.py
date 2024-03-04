@@ -79,13 +79,17 @@ from .models import RecordingDetail
 @login_required(login_url="/login/")
 def database(request):
     if request.user.username == 'root':
-       recording_list = RecordingDetail.objects.all().order_by('-date')
+        recording_list = RecordingDetail.objects.all().order_by('-date')
+        p = Paginator(recording_list,7)
+        page_number = request.GET.get('page')
+        page_obj = p.get_page(page_number)
+        return render(request,'home/admindb.html',{'page_obj':page_obj})
     else:
         recording_list =  RecordingDetail.objects.filter(created_by=request.user).order_by('-date')
-    p = Paginator(recording_list,7)
-    page_number = request.GET.get('page')
-    page_obj = p.get_page(page_number)
-    return render(request,'home/database.html',{'page_obj':page_obj})
+        p = Paginator(recording_list,7)
+        page_number = request.GET.get('page')
+        page_obj = p.get_page(page_number)
+        return render(request,'home/userdb.html',{'page_obj':page_obj})
 
 @login_required(login_url="/login/")
 def edit_form(request,r_id):

@@ -1,0 +1,182 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Apex Charts {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+    /* Style for table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    /* Style for table header */
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+        font-weight: bold;
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Style for table data */
+    td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Style for table row */
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    /* Style for table row when hovered */
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Style for links in table */
+    a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    /* Style for delete link */
+    .delete-link {
+        color: red;
+    }
+
+
+
+
+
+
+    /* Pagenation */
+    .pagination {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    /* Style for pagination links */
+    .pagination a {
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 0 5px;
+        background-color: #f2f2f2;
+        color: #333;
+        text-decoration: none;
+        border-radius: 3px;
+    }
+
+    /* Style for current page number */
+    .pagination span {
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 0 5px;
+        background-color: #5a4b76;
+        color: white;
+        border-radius: 3px;
+    }
+
+
+
+        /* Style for message list */
+        .message-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Style for message list item */
+    .message-item {
+        padding: 10px;
+        margin-bottom: 5px;
+        background-color: #f2f2f2;
+        border-left: 5px solid #4CAF50; /* Use appropriate color for different message types */
+    }
+
+    /* Style for error messages */
+    .message-item.error {
+        border-left-color: #f44336; /* Red for error messages */
+    }
+
+    /* Style for success messages */
+    .message-item.success {
+        border-left-color: #4CAF50; /* Green for success messages */
+    }
+
+    /* Style for info messages */
+    .message-item.info {
+        border-left-color: #2196F3; /* Blue for info messages */
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+	<!-- [ Main Content ] start -->
+	<div class="pc-container">
+		<div class="pcoded-content">
+			<!-- [ breadcrumb ] start -->
+			<!-- <div class="page-header">
+				<div class="page-block">
+					<div class="row align-items-center">
+						<div class="col-md-12">
+							<div class="page-header-title">
+								<h5 class="m-b-10">Apex Chart</h5>
+							</div>
+							<ul class="breadcrumb">
+								<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+								<li class="breadcrumb-item"><a href="#!">Chart</a></li>
+								<li class="breadcrumb-item">Apex Chart</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div> -->
+			<!-- [ breadcrumb ] end -->
+			<!-- [ Main Content ] start -->
+			<div class="row">
+                <ul class="message-list">
+                    {% for message in messages %}
+                    <li class="message-item {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                <table>
+                    <tr>
+                        <th>Created By</th>
+                        <th>Participant's Name</th>
+                        <th>Ethnicity</th>
+                        <th>Date</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for r in page_obj.object_list %}
+                    <tr>
+                        <td>{{ r.created_by }}</td>
+                        <td><a href="{% url 'edit_form' r.id %}">{{r.name}}</a></td>
+                        <td>{{r.ethnicity}}</td>
+                        <td>{{r.date}}</td>
+                        <td><a href="{% url 'delete_rec' r.id %}" class="delete-link">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+			</div>
+            <br><br>
+            <center class="pagination">
+                {% if page_obj.has_previous %}
+                <a href="/db?page={{page_obj.previous_page_number}}">Previous</a>
+                {% endif %}
+                <span>{{page_obj.number}}</span>
+                {% if page_obj.has_next %}
+                <a href="/db?page={{page_obj.next_page_number}}">Next</a>
+                {% endif %}
+            </center>
+			<!-- [ Main Content ] end -->
+		</div>
+	</div>
+	<!-- [ Main Content ] end -->
+
+{% endblock content %}
+
