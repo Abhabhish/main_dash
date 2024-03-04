@@ -4,7 +4,82 @@
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}
+<style>
+    /* Style for table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
+    /* Style for table header */
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+        font-weight: bold;
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Style for table data */
+    td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Style for table row */
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    /* Style for table row when hovered */
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Style for links in table */
+    a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    /* Style for delete link */
+    .delete-link {
+        color: red;
+    }
+
+
+
+
+
+
+    /* Pagenation */
+    .pagination {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    /* Style for pagination links */
+    .pagination a {
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 0 5px;
+        background-color: #f2f2f2;
+        color: #333;
+        text-decoration: none;
+        border-radius: 3px;
+    }
+
+    /* Style for current page number */
+    .pagination span {
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 0 5px;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 3px;
+    }
+</style>
 {% endblock stylesheets %}
 
 {% block content %}
@@ -48,19 +123,19 @@
                         <td><a href="{% url 'edit_form' r.id %}">{{r.name}}</a></td>
                         <td>{{r.ethnicity}}</td>
                         <td>{{r.date}}</td>
-                        <td><a href="{% url 'delete_rec' r.id %}">delete</a></td>
+                        <td><a href="{% url 'delete_rec' r.id %}" class="delete-link">Delete</a></td>
                     </tr>
                     {% endfor %}
                 </table>
 			</div>
             <br><br>
             <center class="pagination">
-                {% if page_obj.has_previous  %}
-                <a href="/db?page={{page_obj.previous_page_number}}">Previous<---</a>
+                {% if page_obj.has_previous %}
+                <a href="/db?page={{page_obj.previous_page_number}}">Previous</a>
                 {% endif %}
                 <span>{{page_obj.number}}</span>
                 {% if page_obj.has_next %}
-                <a href="/db?page={{page_obj.next_page_number}}">--->Next</a>
+                <a href="/db?page={{page_obj.next_page_number}}">Next</a>
                 {% endif %}
             </center>
 			<!-- [ Main Content ] end -->

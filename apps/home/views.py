@@ -82,7 +82,7 @@ def database(request):
        recording_list = RecordingDetail.objects.all().order_by('date')
     else:
         recording_list =  RecordingDetail.objects.filter(created_by=request.user).order_by('date')
-    p = Paginator(recording_list,15)
+    p = Paginator(recording_list,7)
     page_number = request.GET.get('page')
     page_obj = p.get_page(page_number)
     return render(request,'home/database.html',{'page_obj':page_obj})
