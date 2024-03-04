@@ -101,7 +101,7 @@ def edit_form(request,r_id):
                 for error in errors:
                     messages.error(request,f"{field}: {error}")
     fm = RecordingDetailForm(instance=rec)
-    return render(request,'home/EditForm.html',{'form':fm})
+    return render(request,'home/ReForm.html',{'form':fm})
 
     # pass
 
