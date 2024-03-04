@@ -106,13 +106,14 @@
 			</div> -->
 			<!-- [ breadcrumb ] end -->
 			<!-- [ Main Content ] start -->
+            <ul class="message-list">
+                {% for message in messages %}
+                <li class="message-item {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
+                {% endfor %}
+            </ul>
 			<div class="form-container">
 				<div class="row">
-					<ul class="message-list">
-						{% for message in messages %}
-						<li class="message-item {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
-						{% endfor %}
-					</ul>
+					
 					<form action method="POST" novalidate>
 						{% csrf_token %}
 						{{ form.as_p }}
