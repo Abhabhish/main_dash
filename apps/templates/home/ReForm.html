@@ -27,7 +27,7 @@
 
     /* Style for form submit button */
     input[type="submit"] {
-        background-color: #4CAF50;
+        background-color: #5a4b76;
         color: white;
         padding: 10px 20px;
         border: none;
@@ -47,6 +47,24 @@
         border-radius: 5px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
+
+
+
+
+	/* Style for error messages */
+    .message-item.error {
+        border-left-color: #f44336; /* Red for error messages */
+    }
+
+    /* Style for success messages */
+    .message-item.success {
+        border-left-color: #4CAF50; /* Green for success messages */
+    }
+
+    /* Style for info messages */
+    .message-item.info {
+        border-left-color: #2196F3; /* Blue for info messages */
+    }
 </style>
 {% endblock stylesheets %}
 
@@ -56,7 +74,7 @@
 	<div class="pc-container">
 		<div class="pcoded-content">
 			<!-- [ breadcrumb ] start -->
-			<div class="page-header">
+			<!-- <div class="page-header">
 				<div class="page-block">
 					<div class="row align-items-center">
 						<div class="col-md-12">
@@ -71,14 +89,16 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<!-- [ breadcrumb ] end -->
 			<!-- [ Main Content ] start -->
 			<div class="form-container">
 				<div class="row">
-					{% for message in messages %}
-					<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-					{% endfor %}
+					<ul class="message-list">
+						{% for message in messages %}
+						<li class="message-item {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
+						{% endfor %}
+					</ul>
 					<form action method="POST" novalidate>
 						{% csrf_token %}
 						{{ form.as_p }}
