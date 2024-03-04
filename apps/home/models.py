@@ -124,6 +124,6 @@ class RecordingDetail(models.Model):
     glasses = models.CharField(max_length=100,choices=Glasses,null=True)
     makeup = models.CharField(max_length=100,choices=Makeup,null=True)
     recordingstatus=models.CharField(max_length=100,choices=RecordingStatus,null=True)
-    created_by = models.ForeignKey(User,on_delete=models.CASCADE,null=False)
+    created_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
 
 
