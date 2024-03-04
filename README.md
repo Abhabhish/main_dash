@@ -5,7 +5,7 @@ This is the form where we take input from users.
 
 This is Analytics of data collectd from users.
 
-![image](https://github.com/Abhabhish/main_dash/assets/101864843/e6f7f294-5257-4022-8e49-2b8a653c48d3)
+![image](https://github.com/Abhabhish/main_dash/assets/101864843/a720c88a-90a0-42f3-ab4a-a3a646ff3757)
 
 
 Here the users can review ,edit or delete form filled by him.
