@@ -108,10 +108,10 @@ class RecordingDetail(models.Model):
 
     name = models.CharField(max_length=100)
     ethnicity=models.CharField(max_length=100,choices=Ethnicity)
-    age = models.IntegerField()
+    age = models.PositiveIntegerField()
     gender = models.CharField(max_length=10,choices=Gender)
     date = models.DateField(default=timezone.now)
-    height = models.IntegerField()
+    height = models.PositiveIntegerField()
     beard = models.CharField(max_length=100,choices=Beard,null=True)
     hair = models.CharField(max_length=100,choices=Hair)
     eyecolour = models.CharField(max_length=100,choices=EyeColour)
