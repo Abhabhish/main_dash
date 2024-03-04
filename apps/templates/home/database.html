@@ -1,0 +1,72 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Apex Charts {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+	<!-- [ Main Content ] start -->
+	<div class="pc-container">
+		<div class="pcoded-content">
+			<!-- [ breadcrumb ] start -->
+			<div class="page-header">
+				<div class="page-block">
+					<div class="row align-items-center">
+						<div class="col-md-12">
+							<div class="page-header-title">
+								<h5 class="m-b-10">Apex Chart</h5>
+							</div>
+							<ul class="breadcrumb">
+								<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+								<li class="breadcrumb-item"><a href="#!">Chart</a></li>
+								<li class="breadcrumb-item">Apex Chart</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- [ breadcrumb ] end -->
+			<!-- [ Main Content ] start -->
+			<div class="row">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+                <h4>Page No: {{page_obj.number}}</h4>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Ethnicity</th>
+                        <th>Date</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for r in page_obj.object_list %}
+                    <tr>
+                        <td><a href="{% url 'edit_form' r.id %}">{{r.name}}</a></td>
+                        <td>{{r.ethnicity}}</td>
+                        <td>{{r.date}}</td>
+                        <td><a href="{% url 'delete_rec' r.id %}">delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+			</div>
+            <br><br>
+            <center class="pagination">
+                {% if page_obj.has_previous  %}
+                <a href="/db?page={{page_obj.previous_page_number}}">Previous<---</a>
+                {% endif %}
+                <span>{{page_obj.number}}</span>
+                {% if page_obj.has_next %}
+                <a href="/db?page={{page_obj.next_page_number}}">--->Next</a>
+                {% endif %}
+            </center>
+			<!-- [ Main Content ] end -->
+		</div>
+	</div>
+	<!-- [ Main Content ] end -->
+
+{% endblock content %}
+

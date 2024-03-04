@@ -1,111 +1,312 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Apex Charts {% endblock %} 
+{% block title %} Apex Charts {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-	<!-- [ Main Content ] start -->
-	<div class="pc-container">
-		<div class="pcoded-content">
-			<!-- [ breadcrumb ] start -->
-			<div class="page-header">
-				<div class="page-block">
-					<div class="row align-items-center">
-						<div class="col-md-12">
-							<div class="page-header-title">
-								<h5 class="m-b-10">Apex Chart</h5>
-							</div>
-							<ul class="breadcrumb">
-								<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-								<li class="breadcrumb-item"><a href="#!">Chart</a></li>
-								<li class="breadcrumb-item">Apex Chart</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- [ breadcrumb ] end -->
-			<!-- [ Main Content ] start -->
-			<div class="row">
-				<!-- [ variant-chart ] start -->
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<h5>Basic line chart</h5>
-						</div>
-						<div class="card-body">
-							<div id="line-chart-1"></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<h5>Area chart</h5>
-						</div>
-						<div class="card-body">
-							<div id="area-chart-1"></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<h5>Bar chart</h5>
-						</div>
-						<div class="card-body">
-							<div id="bar-chart-1"></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<h5>Bar chart horizontal</h5>
-						</div>
-						<div class="card-body">
-							<div id="bar-chart-3"></div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<h5>Pie Charts</h5>
-						</div>
-						<div class="card-body">
-							<div id="pie-chart-1" style="width:100%"></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<h5>Pie Charts donut</h5>
-						</div>
-						<div class="card-body">
-							<div id="pie-chart-2" style="width:100%"></div>
-						</div>
-					</div>
-				</div>
-				<!-- [ variant-chart ] end -->
-
-			</div>
-			<!-- [ Main Content ] end -->
+<div class="pc-container">
+	<div class="pcoded-content">
+		<div class="page-header">
+			<label for="globalStartDate" class="mr-2">Start Date:</label>
+			<input type="date" id="globalStartDate" class="form-control date-input mr-3" name="globalStartDate">
+			<label for="globalEndDate" class="mr-2">End Date:</label>
+			<input type="date" id="globalEndDate" class="form-control date-input" name="globalEndDate">
 		</div>
+		<!-- [ Main Content ] start -->
+		<div class="row">
+			<!-- [ variant-chart ] start -->
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h5>Ethnicity Wise Gender</h5>
+					</div>
+					<div class="card-body">
+						<div id="ethnicity-wise-gender-ratio"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h5>Work Package Gender Wise</h5>
+					</div>
+					<div class="card-body">
+						<div id="wp-wise-gender"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h5>Gender Ratio</h5>
+					</div>
+					<div class="card-body">
+						<div id="gender-ratio-pie-chart" style="width:100%"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h5>Ethnicity Ratio</h5>
+					</div>
+					<div class="card-body">
+						<div id="ethnicity-ratio-donut-chart" style="width:100%"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h5>Date Wise Progress</h5>
+					</div>
+					<div class="card-body">
+						<div id="date-wise-line-chart"></div>
+					</div>
+				</div>
+			</div>
+			<!-- [ variant-chart ] end -->
+
+		</div>
+		<!-- [ Main Content ] end -->
 	</div>
-	<!-- [ Main Content ] end -->
+</div>
+<!-- [ Main Content ] end -->
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
-	<script src="/static/assets/js/plugins/apexcharts.min.js"></script>
-	<script src="/static/assets/js/pages/chart-apex.js"></script>
+<script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+<script src="/static/assets/js/pages/chart-apex.js"></script>
+
+<!-- GENDER PIE CHART -->
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		// PIE
+		var gender_chart;
+		var gender_chart_options = {
+			series: [1, 1],
+			chart: {
+				width: 380,
+				type: 'pie',
+			},
+			labels: ['M', 'F'],
+			responsive: [{
+				breakpoint: 480,
+				options: {
+					chart: {
+						width: 200
+					},
+					legend: {
+						position: 'bottom'
+					}
+				}
+			}]
+		};
+		gender_chart = new ApexCharts(document.querySelector("#gender-ratio-pie-chart"), gender_chart_options);
+		gender_chart.render();
+
+        // DONUT
+        var ethnicity_chart; // Define chart globally to access it outside the initialization block
+		var ethnicity_chart_options = {
+			series: [1, 1, 1, 1, 1, 1, 1, 1],
+			chart: {
+				width: 380,
+				type: 'donut',
+			},
+			labels: ['Caucasian', 'African', 'Arab (Middle-East)', 'Asians (South-East)', 'Chinese', 'Latin/Hispanic', 'Indian', 'Others'],
+			colors: ['#FFB900', '#FF5733', '#C70039', '#900C3F', '#581845', '#4A235A', '#154360', '#1ABC9C'],
+			responsive: [{
+				breakpoint: 480,
+				options: {
+					chart: {
+						width: 200
+					},
+					legend: {
+						position: 'bottom'
+					}
+				}
+			}]
+		};
+		ethnicity_chart = new ApexCharts(document.querySelector("#ethnicity-ratio-donut-chart"), ethnicity_chart_options);
+		ethnicity_chart.render();
+
+
+        // BAR VERTICLE
+		var ethnicity_wise_gender_chart;
+		var ethnicity_wise_gender_chart_options = {
+			series: [{
+				name: 'Male',
+				data: [44, 55, 57, 56, 61, 58, 63, 60]
+			}, {
+				name: 'Female',
+				data: [35, 41, 36, 26, 45, 48, 52, 53]
+			}],
+			chart: {
+				type: 'bar',
+				height: 350
+			},
+			plotOptions: {
+				bar: {
+					horizontal: false,
+					columnWidth: '55%',
+					endingShape: 'rounded'
+				},
+			},
+			dataLabels: {
+				enabled: false
+			},
+			stroke: {
+				show: true,
+				width: 2,
+				colors: ['transparent']
+			},
+			xaxis: {
+				categories: ['Caucasian', 'African', 'Arab (Middle-East)', 'Asians (South-East)', 'Chinese', 'Latin/Hispanic', 'Indian', 'Others'],
+			},
+			yaxis: {
+				title: {
+					text: '$ (thousands)'
+				}
+			},
+			fill: {
+				opacity: 1
+			},
+			tooltip: {
+				y: {
+					formatter: function (val) {
+						return val
+					}
+				}
+			}
+		};
+		var ethnicity_wise_gender_chart = new ApexCharts(document.querySelector("#ethnicity-wise-gender-ratio"), ethnicity_wise_gender_chart_options);
+		ethnicity_wise_gender_chart.render();
+
+
+        // LINE
+		var date_wise_progress_chart;
+		var date_wise_progress_chart_options = {
+			series: [{
+				name: "Desktops",
+				data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+			}],
+			chart: {
+				height: 350,
+				type: 'line',
+				zoom: {
+					enabled: false
+				}
+			},
+			dataLabels: {
+				enabled: false
+			},
+			stroke: {
+				curve: 'straight'
+			},
+			title: {
+				// text: 'Product Trends by Month',
+				text: '',
+				align: 'left'
+			},
+			grid: {
+				row: {
+					colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+					opacity: 0.5
+				},
+			},
+			xaxis: {
+				categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+			}
+		};
+		date_wise_progress_chart = new ApexCharts(document.querySelector("#date-wise-line-chart"), date_wise_progress_chart_options);
+		date_wise_progress_chart.render();
+
+
+        // BAR HORIZONTAL
+		var wp_wise_gender_chart;
+		var wp_wise_gender_chart_options = {
+			series: [{
+				data: [44, 55, 41, 64, 22, 43, 21]
+			}, {
+				data: [53, 32, 33, 52, 13, 44, 32]
+			}],
+			chart: {
+				type: 'bar',
+				height: 430
+			},
+			plotOptions: {
+				bar: {
+					horizontal: true,
+					dataLabels: {
+						position: 'top',
+					},
+				}
+			},
+			dataLabels: {
+				enabled: true,
+				offsetX: -6,
+				style: {
+					fontSize: '12px',
+					colors: ['#fff']
+				}
+			},
+			stroke: {
+				show: true,
+				width: 1,
+				colors: ['#fff']
+			},
+			tooltip: {
+				shared: true,
+				intersect: false
+			},
+			xaxis: {
+				categories: ['WP1', 'WP2', 'WP3', 'WP4', 'WP5'],
+			},
+		};
+		var wp_wise_gender_chart = new ApexCharts(document.querySelector("#wp-wise-gender"), wp_wise_gender_chart_options);
+		wp_wise_gender_chart.render();
+
+
+
+		function updateChartData(startDate, endDate) {
+			fetch(`/ajax_charts?startDate=${startDate}&endDate=${endDate}`)
+				.then(response => response.json())
+				.then(data => {
+					gender_chart.updateOptions(data.gender);
+					ethnicity_chart.updateOptions(data.ethnicity);
+					ethnicity_wise_gender_chart.updateOptions(data.ethnicity_wise_gender);
+					date_wise_progress_chart.updateOptions(data.date_wise_progress);
+					wp_wise_gender_chart.updateOptions(data.wp_wise_gender);
+				})
+				.catch(error => console.error('Error fetching data:', error));
+		}
+		var startDateInput = document.getElementById("globalStartDate");
+		var endDateInput = document.getElementById("globalEndDate");
+		function updateChart() {
+			var startDate = startDateInput.value;
+			var endDate = endDateInput.value;
+			updateChartData(startDate, endDate);
+		}
+		startDateInput.addEventListener("change", updateChart);
+		endDateInput.addEventListener("change", updateChart);
+		var today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+		startDateInput.value = '2023-01-01'; // Set default start date
+		endDateInput.value = today; // Set default end date
+		updateChart();
+	});
+</script>
+
+
 
 {% endblock javascripts %}
+
+
+
+

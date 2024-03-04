@@ -110,9 +110,9 @@ class RecordingDetail(models.Model):
     ethnicity=models.CharField(max_length=100,choices=Ethnicity)
     age = models.IntegerField()
     gender = models.CharField(max_length=10,choices=Gender)
-    date = models.DateTimeField(default=timezone.now)
+    date = models.DateField(default=timezone.now)
     height = models.IntegerField()
-    beard = models.CharField(max_length=100,choices=Beard)
+    beard = models.CharField(max_length=100,choices=Beard,null=True)
     hair = models.CharField(max_length=100,choices=Hair)
     eyecolour = models.CharField(max_length=100,choices=EyeColour)
     workpackage = models.CharField(max_length=100,choices=WPGs)
@@ -124,5 +124,6 @@ class RecordingDetail(models.Model):
     glasses = models.CharField(max_length=100,choices=Glasses,null=True)
     makeup = models.CharField(max_length=100,choices=Makeup,null=True)
     recordingstatus=models.CharField(max_length=100,choices=RecordingStatus,null=True)
+    created_by = models.ForeignKey(User,on_delete=models.CASCADE,null=False)
 
 

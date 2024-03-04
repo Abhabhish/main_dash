@@ -3,7 +3,52 @@
 {% block title %} Apex Charts {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<style>
+    /* Style for form fields */
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    select {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /* Style for labels */
+    label {
+        margin-top: 10px;
+        display: block;
+        font-weight: bold;
+    }
+
+    /* Style for form submit button */
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    /* Style for form container */
+    .form-container {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -29,15 +74,17 @@
 			</div>
 			<!-- [ breadcrumb ] end -->
 			<!-- [ Main Content ] start -->
-			<div class="row">
-				<form action="" method="POST" class="form-beautiful">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        {{ form.as_p }}
-                    </div>
-                    <input type="submit" value="Submit" class="btn btn-primary">
-                </form>
-				
+			<div class="form-container">
+				<div class="row">
+					{% for message in messages %}
+					<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+					{% endfor %}
+					<form action method="POST" novalidate>
+						{% csrf_token %}
+						{{ form.as_p }}
+						<input type="submit">
+					</form>
+				</div>
 			</div>
 			<!-- [ Main Content ] end -->
 		</div>
