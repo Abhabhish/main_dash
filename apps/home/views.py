@@ -14,6 +14,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.db.models import Count, Case, When, CharField
+from django.contrib.auth.models import User
 
 
 @login_required(login_url="/login/")
@@ -44,14 +45,15 @@ def get_random_date(start_date, end_date):
     return start_date + timedelta(days=random_days)
 
 def populate_database():
-    for _ in range(5):
+    for _ in range(50):
         RecordingDetail.objects.create(
             name=f"User{random.randint(1, 1000)}",
             ethnicity=random.choice(RecordingDetail.Ethnicity)[0],
             age=random.randint(18, 65),
-            # gender=random.choice(RecordingDetail.Gender)[0],
-            gender='M',
-            date=get_random_date(datetime(2023, 8, 1), datetime(2023, 10, 31)),
+            gender=random.choice(RecordingDetail.Gender)[0],
+            created_by=User.objects.get(username='root'),
+            # gender='M',
+            date=get_random_date(datetime(2023, 8, 1), datetime(2024, 3, 4)),
             height=random.randint(150, 200),
             beard=random.choice(RecordingDetail.Beard)[0],
             hair=random.choice(RecordingDetail.Hair)[0],
