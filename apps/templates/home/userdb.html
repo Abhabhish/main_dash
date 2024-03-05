@@ -149,14 +149,14 @@
                         <th>Name</th>
                         <th>Ethnicity</th>
                         <th>Date</th>
-                        <th>Delete</th>
+                        <th>Delete?</th>
                     </tr>
                     {% for r in page_obj.object_list %}
                     <tr>
                         <td><a href="{% url 'edit_form' r.id %}">{{r.name}}</a></td>
                         <td>{{r.ethnicity}}</td>
                         <td>{{r.date}}</td>
-                        <td><a href="{% url 'delete_rec' r.id %}" class="delete-link">Delete</a></td>
+                        <td><a href="{% url 'delete_rec' r.id %}" class="delete-link">&#10060;</a></td>
                     </tr>
                     {% endfor %}
                 </table>
